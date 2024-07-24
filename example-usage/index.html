@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Room Reservation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    input, button {
+      margin: 5px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .message {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Server Room Reservation</h1>
+  <div>
+    <h2>Reserve a Room</h2>
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId" placeholder="Enter your user ID"><br>
+    <label for="duration">Duration (minutes):</label>
+    <input type="number" id="duration" placeholder="Enter duration in minutes"><br>
+    <button onclick="reserveRoom()">Reserve</button>
+    <div id="reserveMessage" class="message"></div>
+  </div>
+  <div>
+    <h2>Check Reservation Status</h2>
+    <label for="statusUserId">User ID:</label>
+    <input type="text" id="statusUserId" placeholder="Enter your user ID"><br>
+    <button onclick="checkStatus()">Check Status</button>
+    <div id="statusMessage" class="message"></div>
+  </div>
+  <div>
+    <h2>Leave Room</h2>
+    <label for="leaveUserId">User ID:</label>
+    <input type="text" id="leaveUserId" placeholder="Enter your user ID"><br>
+    <button onclick="leaveRoom()">Leave Room</button>
+    <div id="leaveMessage" class="message"></div>
+  </div>
+  <script>
+    const baseUrl = 'https://node-server-queue.vercel.app';
+
+    async function reserveRoom() {
+      const userId = document.getElementById('userId').value;
+      const duration = document.getElementById('duration').value;
+
+      const response = await fetch(`${baseUrl}/reserve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, duration })
+      });
+
+      const data = await response.json();
+      const messageDiv = document.getElementById('reserveMessage');
+      messageDiv.textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function checkStatus() {
+      const userId = document.getElementById('statusUserId').value;
+
+      const response = await fetch(`${baseUrl}/status/${userId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const data = await response.json();
+      const messageDiv = document.getElementById('statusMessage');
+      messageDiv.textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function leaveRoom() {
+      const userId = document.getElementById('leaveUserId').value;
+
+      const response = await fetch(`${baseUrl}/leave`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId })
+      });
+
+      const data = await response.json();
+      const messageDiv = document.getElementById('leaveMessage');
+      messageDiv.textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
