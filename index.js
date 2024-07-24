@@ -2,10 +2,8 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const cors = require('cors');
 const app = express();
-const PORT = 3000;
 
 app.use(express.json());
-
 app.use(cors());
 
 let serverRooms = [
@@ -78,6 +76,4 @@ app.post('/leave', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;
