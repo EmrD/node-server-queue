@@ -1,22 +1,13 @@
 {
-  "name": "node-express-api",
-  "description": "Simple api sample in Node",
+  "name": "my-app",
   "version": "1.0.0",
-  "private": true,
-  "main": "index.js",
-  "type": "module",
+  "main": "api/index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node api/index.js"
   },
-  "author": "Google LLC",
-  "license": "Apache-2.0",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "uuid": "^10.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
+    "express": "^4.17.1",
+    "uuid": "^8.3.2",
+    "cors": "^2.8.5"
   }
 }
